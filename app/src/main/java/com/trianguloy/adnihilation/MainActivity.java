@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
     public void onButtonClick(View view) {
 //        switch (view.getId()){
 //            case R.id.regenerate:
-        ad.loadAd();
+        ad.loadAd(false);
 //                break;
 //        }
     }

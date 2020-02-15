@@ -14,24 +14,12 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 /**
  * Manages the Ad view
  */
 public class Ad extends View implements View.OnTouchListener {
-
-    /**
-     * List of ads identifiers
-     */
-    private List<Integer> adsIds = new ArrayList<>();
-    /**
-     * Next ad to load (for no-total-random purposes)
-     */
-    private int nextAd = 0;
 
     /**
      * Dragging distance to add 1 point
@@ -61,6 +49,7 @@ public class Ad extends View implements View.OnTouchListener {
      * Random utils
      */
     private Random random = new Random();
+
     /**
      * Random number in range [f,t]
      * @param f minimum value, included
@@ -78,9 +67,10 @@ public class Ad extends View implements View.OnTouchListener {
     private final Canvas c;
 
     /**
-     * Points
+     * Classes
      */
     private Points points;
+    private AdsList adsList;
 
     // ------------------- Constructor -------------------
 
@@ -105,52 +95,23 @@ public class Ad extends View implements View.OnTouchListener {
         c = new Canvas(btm);
 
         // load ads
-        initializeAds();
-        loadAd();
+        adsList = new AdsList();
+        loadAd(true);
 
         // prepare view
         setOnTouchListener(this);
     }
 
     /**
-     * Populates the list adsIds by loading available ads
-     */
-    private void initializeAds() {
-        // clear just in case
-        adsIds.clear();
-
-        // foreach drawable, get the ads
-        Field[] fields = R.drawable.class.getDeclaredFields();
-        R.drawable drawableResources = new R.drawable();
-        for (Field field : fields) {
-            try {
-                if (field.getName().startsWith("ad_")) {
-                    // ads start with 'ad_'
-                    adsIds.add(field.getInt(drawableResources));
-                    if(field.getName().equals("ad_test")){
-                        // test ad is always the first to load
-                        nextAd = adsIds.size() - 1;
-                    }
-                }
-            } catch (Exception ignored) {
-            }
-        }
-    }
-
-    /**
      * Loads a new ad (using the nextAd as index).
      * Prepares nextAd for a different random one
      */
-    public void loadAd() {
+    public void loadAd(boolean test) {
         // load
-        Bitmap bm = BitmapFactory.decodeResource(getResources(), adsIds.get(nextAd));
+        Bitmap bm = BitmapFactory.decodeResource(getResources(), test ? adsList.getTestAd() : adsList.getRandomAd());
         c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.SRC_ATOP);
         c.drawBitmap(Bitmap.createScaledBitmap(bm, WIDTH, HEIGHT, false), 0, 0, null);
         invalidate();
-
-        // next random ad (different from previous)
-        nextAd += r(1,adsIds.size() - 1);
-        nextAd %= adsIds.size();
     }
 
     /**
