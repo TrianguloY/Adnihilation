@@ -3,12 +3,12 @@
     <string name="txt_info">"This is just a very small app to allow you take out on those nasty ads.
 All the ads in this app are fake and can't use your personal data (this app doesn't even have the internet permission), and won't show any unskipable popup or redirect you to a fake Play Store when clicked.
 
-Just drag and press to destroy the ad, or press the button to load a new random one.
-The number above it is your adnihilation score, increases when any ad is destroyed, saved automatically.
+Just drag and press to damage the ad, or press the button to load a new random one.
+The number above it is your adnihilation score, increases when any ad is damaged, saved automatically.
 
 Note: currently the features of this app are quite small, this is like an 'experiment', but will consider improving it if it becomes popular enough (adding more ads, better destroying, maybe destroying tools, …).
 "</string>
-    <string name="btn_load">Load ad</string>
+    <string name="btn_load">Load random ad</string>
     <string name="txt_about">"App created by TrianguloY.
 The source code of the app is available in Github.
 "</string>
