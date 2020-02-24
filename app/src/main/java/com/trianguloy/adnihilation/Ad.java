@@ -22,9 +22,9 @@ import java.util.Random;
 public class Ad extends View implements View.OnTouchListener {
 
     /**
-     * Dragging distance to add 1 point
+     * Dragging distance to add 1 point (percentage of width)
      */
-    private static final int D = 500;
+    private static final float D = 0.75f;
 
     /**
      * Size of ads
@@ -139,6 +139,7 @@ public class Ad extends View implements View.OnTouchListener {
     float lastx;
     float lasty;
     float dist = 0;
+    boolean drag;
 
     /**
      * When the user touches the ad
@@ -150,13 +151,14 @@ public class Ad extends View implements View.OnTouchListener {
         switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
                 // start of touch
+                drag = false;
                 lastx = x;
                 lasty = y;
                 dist = 0;
                 break;
             case MotionEvent.ACTION_UP:
                 // end of touch
-                if (lastx == x && lasty == y) {
+                if (!drag) {
                     // a press (not a drag)
                     drawHit(x, y);
                     points.addPoints(10);
@@ -164,6 +166,7 @@ public class Ad extends View implements View.OnTouchListener {
                 break;
             case MotionEvent.ACTION_MOVE:
                 // a drag
+                if(dist > WIDTH * 0.01) drag = true;
                 if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT) {
                     // inside the ad
 
@@ -171,9 +174,9 @@ public class Ad extends View implements View.OnTouchListener {
                     float dx = lastx - x;
                     float dy = lasty - y;
                     dist += Math.sqrt(dx * dx + dy * dy);
-                    while (dist > D) {
+                    while (dist > D * WIDTH) {
                         // enough distance, add points
-                        dist -= D;
+                        dist -= D * WIDTH;
                         points.addPoints(1);
                     }
                     // draw random ray and scratch

@@ -1,13 +1,13 @@
 package com.trianguloy.adnihilation;
 
 import java.lang.reflect.Field;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Random;
 
 class AdsList {
     private static final String AD_PREFIX = "ad_"; // ads must have this prefix
     private static final String AD_TEST = "test_ad"; // the test ad
-    private static final float PERCENT_DIFFERENT = 0.5f; // percentage of ads to return before showing the same one again
 
     /**
      * List of ads identifiers
@@ -48,7 +48,7 @@ class AdsList {
             } catch (Exception ignored) {
             }
         }
-
+        Collections.shuffle(adsIds);
     }
 
     /**
@@ -59,11 +59,14 @@ class AdsList {
     }
 
     /**
-     * @return a random ad id (ensure it won't be returned again in a while
+     * @return a random ad id (ensures the probability of getting a recent one is low)
      */
     int getRandomAd() {
-        // get random from the available top
-        int index = random.nextInt((int) Math.ceil(adsIds.size() * (1 - PERCENT_DIFFERENT)));
+        // get random (first are more probable)
+        int index = 0;
+        while(index < adsIds.size() - 1 && random.nextBoolean()){
+            index++;
+        }
         int ad = adsIds.remove(index);
 
         // add to back and return

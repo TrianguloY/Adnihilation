@@ -1,6 +1,10 @@
 package com.trianguloy.adnihilation;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.view.View;
 import android.widget.TextView;
 
 /**
@@ -32,6 +36,10 @@ class Points {
         points = prefs.getPoints();
         text = cntx.findViewById(R.id.points);
 
+        // set color
+        final int b_color = getBackgroundColor(text.getRootView());
+        text.setBackgroundColor(Color.argb(125,Color.red(b_color),Color.green(b_color),Color.blue(b_color)));
+
         // show
         update();
     }
@@ -57,5 +65,21 @@ class Points {
      */
     void save(){
         prefs.setPoints(points);
+    }
+
+
+    // ------------------- utils -------------------
+
+    /**
+     * Returns the view background color
+     * @param view view
+     * @return color
+     */
+    private static int getBackgroundColor(View view) {
+        Drawable drawable = view.getBackground();
+        if (drawable instanceof ColorDrawable) {
+            return ((ColorDrawable) drawable).getColor();
+        }
+        return Color.GRAY;
     }
 }
