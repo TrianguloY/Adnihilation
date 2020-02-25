@@ -8,10 +8,9 @@ Just drag and press to damage the ad, or press the button to load a new random o
 
 The number above it is your adnihilation score, increases when any ad is damaged, saved automatically.
 
-Note: currently the features of this app are quite small, this is like an 'experiment', but will consider improving it if it becomes popular enough (adding more ads, better destroying, maybe destroying tools, …).
-"</string>
+Note: currently the features of this app are quite small, this is like an 'experiment', but will consider improving it if it becomes popular enough (adding more ads, better destroying, maybe destroying tools, …)."</string>
     <string name="btn_load">Load random ad</string>
-    <string name="txt_about">"App created by TrianguloY.
-The source code of the app is available in Github.
-"</string>
+    <string name="txt_about">"App created by TrianguloY ([[email|contact]]), available on Play Store ([[playStore_open|open]]) ([[playStore_share|share]]).
+The source code of the app is available on [[Github]]."</string>
+    <string name="send">Send</string>
 </resources>
