@@ -1,8 +1,6 @@
 package com.trianguloy.adnihilation;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -59,34 +57,19 @@ public class MainActivity extends Activity implements ClickableLinks.OnUrlListen
     public void onClick(String tag) {
         switch (tag) {
             case "email":
-                final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-                emailIntent.setType("plain/text");
-                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"correo--correo+appAd@hotmail.com"});
-                emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-                startActivity(Intent.createChooser(emailIntent, getString(R.string.send)));
+                ExternalUtils.sendEmail(getString(R.string.app_name), "correo--correo+appAd@hotmail.com", this);
                 break;
             case "Github":
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/TrianguloY/"))); //TODO: change with github url
+                ExternalUtils.openLink("https://github.com/TrianguloY/", this); //TODO: change with github url
                 break;
             case "playStore_open":
-                final String appPackageName = getPackageName();
-                try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-                } catch (android.content.ActivityNotFoundException ignored) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-                }
+                ExternalUtils.openLink("https://play.google.com/store/apps/details?id=" + getPackageName(), this);
                 break;
             case "playStore_share":
-                final String title = getString(R.string.app_name);
-
-                Intent i = new Intent(Intent.ACTION_SEND);
-                i.setType("text/plain");
-                i.putExtra(Intent.EXTRA_SUBJECT, title);
-                i.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=" + getPackageName());
-                startActivity(Intent.createChooser(i, getString(R.string.send)));
+                ExternalUtils.shareText("https://play.google.com/store/apps/details?id=" + getPackageName(), getString(R.string.app_name), this);
                 break;
             default:
-                Log.d("CLICKABLE_LINK", "unknown url: " + tag);
+                Log.d("CLICKABLE_LINK", "unknown tag: " + tag);
         }
     }
 }
