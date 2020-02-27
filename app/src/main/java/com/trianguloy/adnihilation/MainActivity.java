@@ -60,7 +60,7 @@ public class MainActivity extends Activity implements ClickableLinks.OnUrlListen
                 ExternalUtils.sendEmail(getString(R.string.app_name), "correo--correo+appAd@hotmail.com", this);
                 break;
             case "Github":
-                ExternalUtils.openLink("https://github.com/TrianguloY/", this); //TODO: change with github url
+                ExternalUtils.openLink("https://github.com/TrianguloY/Adnihilation", this);
                 break;
             case "playStore_open":
                 ExternalUtils.openLink("https://play.google.com/store/apps/details?id=" + getPackageName(), this);
