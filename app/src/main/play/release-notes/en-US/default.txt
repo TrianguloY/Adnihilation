@@ -1,0 +1,2 @@
+V 1.0
+-Initial release on Play Store
